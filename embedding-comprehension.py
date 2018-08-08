@@ -5,7 +5,7 @@ import tensorflow_hub as hub
 import numpy as np
 
 raw = io.open('%s' % sys.argv[1], mode='r', encoding='utf-8')
-processed = io.open('%s.bowanswers' % sys.argv[1], mode='w', encoding='utf-8')
+processed = io.open('%s.embedanswers' % sys.argv[1], mode='w', encoding='utf-8')
 
 module_url = "https://tfhub.dev/google/universal-sentence-encoder/2"
 print("Embedding module ...")
@@ -110,14 +110,19 @@ def run_and_find_similar(session_, input_tensor_, messages_, encoding_tensor):
 
   if BEST == corr[0]:
       output = 'A'
+      print('A')
   elif BEST == corr[1]:
       output = 'B'
+      print('B')
   elif BEST == corr[2]:
       output = 'C'
+      print('C')
   elif BEST == corr[3]:
       output = 'D'
+      print('D')
   else:
       output = 'E'
+      print('E')
 
   return output
 
@@ -131,10 +136,13 @@ passage_itr = 0
 while True:
     X = copy_passage(raw, text)
     print('Passage #' + str(passage_itr))
-    passage_itr += 1
+
     #break if EOF
     if X == 0:
         break
+    elif passage_itr >=1:
+        break
+    passage_itr += 1
 
     #loop through first 3 questions
     for i in range(4):
